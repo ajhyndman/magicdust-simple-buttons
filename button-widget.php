@@ -37,7 +37,7 @@ class Button_Widget extends \WP_Widget {
 		// 	echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 		// }
 
-		echo('<a class="magic-button" href="' . esc_url( get_permalink( $instance['link'] ) ) . '">' . $instance['label'] . '</a>');
+		echo('<a class="magic-button" href="' . esc_url( /*get_permalink(*/ $instance['link'] /*)*/ ) . '">' . $instance['label'] . '</a>');
 
 		echo $args['after_widget'];
 	}
@@ -56,12 +56,12 @@ class Button_Widget extends \WP_Widget {
 		<input class="widefat" id="<?php echo $this->get_field_id( 'label' ); ?>" name="<?php echo $this->get_field_name( 'label' ); ?>" type="text" value="<?php echo esc_attr( $label ); ?>">
 		</p>
 
-<!-- 		<p>
+ 		<p>
 		<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" type="text" value="<?php echo esc_attr( $link ); ?>">
-		</p> -->
-
-		<p>
+		</p>
+		
+<!-- 		<p>
 		<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:' ); ?></label> 
 		<?php
 		// $selected = ! empty()
@@ -71,7 +71,7 @@ class Button_Widget extends \WP_Widget {
 		    'name'     => $this->get_field_name('link'),
 		    'selected' => $link,
 		)); ?>
-		</p>
+		</p> -->
 
 		<?php 
 	}
