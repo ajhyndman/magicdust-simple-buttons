@@ -1,0 +1,10 @@
+/**
+ * Convert button links into blocks.
+ * Leave the rest to the site theme.
+ */
+
+.magic-button {
+	display: block;
+	padding: 0.5em;
+	text-align: center;
+}

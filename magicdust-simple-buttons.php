@@ -12,16 +12,26 @@
  * Author URI: https://github.com/ajhyndman
  */
 
-
-
-
-
 namespace magicdust;
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-require_once( plugin_dir_path( __FILE__ ).'/magicdust-button-widget.php' );
 
+
+
+
+/* Define and register the Magicdust Button widget. */
+
+require_once( plugin_dir_path( __FILE__ ).'button-widget.php' );
 
 add_action( 'widgets_init', function(){
-     register_widget( 'magicdust\Magicdust_Button_Widget' );
+	register_widget( 'magicdust\Button_Widget' );
 });
+
+
+/* Include the bundled CSS. */
+
+function enqueue_button_scripts() {
+	wp_enqueue_style( 'magicdust_button_stylesheet', plugins_url( 'buttons.css', __FILE__ ), '', 0.1 );
+}
+add_action( 'wp_enqueue_scripts', 'magicdust\enqueue_button_scripts' );

@@ -4,14 +4,15 @@
  * 
  */
 
-
-
-
-
 namespace magicdust;
 
+defined( 'ABSPATH' ) or die( 'No script kiddies please!' );
 
-class Magicdust_Button_Widget extends \WP_Widget {
+
+
+
+
+class Button_Widget extends \WP_Widget {
 
 	/**
 	 * Sets up the widgets name etc
@@ -36,7 +37,7 @@ class Magicdust_Button_Widget extends \WP_Widget {
 		// 	echo $args['before_title'] . apply_filters( 'widget_title', $instance['title'] ). $args['after_title'];
 		// }
 
-		echo '<a class="magic-button" href="' . $instance['link'] . '">' . $instance['label'] . '</a>';
+		echo('<a class="magic-button" href="' . esc_url( get_permalink( $instance['link'] ) ) . '">' . $instance['label'] . '</a>');
 
 		echo $args['after_widget'];
 	}
@@ -48,17 +49,30 @@ class Magicdust_Button_Widget extends \WP_Widget {
 	 */
 	public function form( $instance ) {
 		$label = ! empty( $instance['label'] ) ? $instance['label'] : __( 'New Label', 'magicdust-button-label-placeholder' );
-		$link = ! empty( $instance['link'] ) ? $instance['link'] : __( 'New Link', 'magicdust-button-link-placeholder' );
+		$link = ! empty( $instance['link'] ) ? $instance['link'] : __( '#', 'magicdust-button-link-placeholder' );
 		?>
 		<p>
 		<label for="<?php echo $this->get_field_id( 'label' ); ?>"><?php _e( 'Label:' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'label' ); ?>" name="<?php echo $this->get_field_name( 'label' ); ?>" type="text" value="<?php echo esc_attr( $label ); ?>">
 		</p>
 
-		<p>
+<!-- 		<p>
 		<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:' ); ?></label> 
 		<input class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" type="text" value="<?php echo esc_attr( $link ); ?>">
+		</p> -->
+
+		<p>
+		<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:' ); ?></label> 
+		<?php
+		// $selected = ! empty()
+		wp_dropdown_pages(array(
+			'class'    => 'widefat',
+		    'id'       => $this->get_field_id('link'),
+		    'name'     => $this->get_field_name('link'),
+		    'selected' => $link,
+		)); ?>
 		</p>
+
 		<?php 
 	}
 
