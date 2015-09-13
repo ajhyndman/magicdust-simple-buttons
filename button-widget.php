@@ -134,7 +134,7 @@ class Button_Widget extends \WP_Widget {
 		<!-- Output a text field for manual link entry. -->
  		<p data-control-group="custom-url">
 			<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:' ); ?></label> 
-			<input class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" name="<?php echo $this->get_field_name( 'link' ); ?>" type="text" value="<?php echo esc_attr( $link ); ?>">
+			<input class="widefat" id="<?php echo $this->get_field_id( 'link' ); ?>" data-name="<?php echo $this->get_field_name( 'link' ); ?>" type="text" value="<?php echo esc_attr( $link ); ?>">
 		</p>
 
 		<?php 
@@ -175,7 +175,7 @@ function get_post_dropdown($select_name, $post_type, $selected = 0) {
     $posts = get_posts(array('post_type'=> $post_type, 'post_status' => 'publish', 'suppress_filters' => false, 'posts_per_page'=>-1));
 
     // Generate output string.
-    $output = '<select class="widefat" name="' . $select_name . '">';
+    $output = '<select class="widefat" data-name="' . $select_name . '">';
     foreach ($posts as $post) {
     	$output .= '<option value="' . $post->ID . '"' . ($selected == $post->ID ? ' selected="selected"' : '') . '>' . $post->post_title . '</option>';
     }
@@ -200,7 +200,7 @@ function get_taxonomy_term_dropdown($select_name, $taxonomy, $selected = 0) {
     // $posts = get_posts(array('post_type'=> $post_type, 'post_status' => 'publish', 'suppress_filters' => false, 'posts_per_page'=>-1));
 
     // Generate output string.
-    $output = '<select class="widefat" name="' . $select_name . '">';
+    $output = '<select class="widefat" data-name="' . $select_name . '">';
     foreach ($terms as $term) {
     	$output .= '<option value="' . $term->slug . '"' . ($selected == $term->name ? ' selected="selected"' : '') . '>' . $term->name . '</option>';
     }
