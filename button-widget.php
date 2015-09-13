@@ -46,7 +46,7 @@ class Button_Widget extends \WP_Widget {
 			echo('<a class="magic-button" href="' . esc_url( get_permalink($instance['link']) ) . '">' . $instance['label'] . '</a>');
 		} else {
 			// If it is a taxonomy:
-			echo('<a class="magic-button" href="' . esc_url( get_term_link( $instance['link']) ) . '">' . $instance['label'] . '</a>');
+			echo('<a class="magic-button" href="' . esc_url( get_term_link( $instance['link'], $instance['link_type'] ) ) . '">' . $instance['label'] . '</a>');
 		}
 
 		echo $args['after_widget'];
@@ -85,7 +85,7 @@ class Button_Widget extends \WP_Widget {
 		Output a select option for all valid post types and taxonomies.
 		(This list should match the options available in WordPress menu creation.)
 		-->
-		<p>
+		<p data-control-group="link-type">
 			<?php
 			// Fetch arrays of the post types and taxonomies currently enabled in menu creation.
 			$post_types = get_post_types( array( 'show_in_nav_menus' => true ), 'objects' );
@@ -115,7 +115,7 @@ class Button_Widget extends \WP_Widget {
 	 		<p data-control-group="<?php echo $post_type->name; ?>">
 				<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:' ); ?></label> 
 				<?php
-				echo get_post_dropdown(0, $post_type->name, $link);
+				echo get_post_dropdown($this->get_field_name( 'link' ), $post_type->name, $link);
 				?>
 			</p>
 		<?php endforeach; ?>
@@ -125,7 +125,7 @@ class Button_Widget extends \WP_Widget {
 	 		<p data-control-group="<?php echo $taxonomy->name; ?>">
 				<label for="<?php echo $this->get_field_id( 'link' ); ?>"><?php _e( 'Link:' ); ?></label> 
 				<?php
-				echo get_taxonomy_term_dropdown(0, $taxonomy->name, $link);
+				echo get_taxonomy_term_dropdown($this->get_field_name( 'link' ), $taxonomy->name, $link);
 				?>
 			</p>
 		<?php endforeach; ?>
@@ -169,13 +169,13 @@ class Button_Widget extends \WP_Widget {
  * @param $post_type The slug of the post type you wish to filter by as a strong.
  * @param $selected  The ID (as an integer) of the currently selected post.
  */
-function get_post_dropdown($select_id, $post_type, $selected = 0) {
+function get_post_dropdown($select_name, $post_type, $selected = 0) {
 
 	// Get raw array of all published post objects corresponding to the $post_type.
     $posts = get_posts(array('post_type'=> $post_type, 'post_status' => 'publish', 'suppress_filters' => false, 'posts_per_page'=>-1));
 
     // Generate output string.
-    $output = '<select class="widefat" id="' . $select_id . '">';
+    $output = '<select class="widefat" name="' . $select_name . '">';
     foreach ($posts as $post) {
     	$output .= '<option value="' . $post->ID . '"' . ($selected == $post->ID ? ' selected="selected"' : '') . '>' . $post->post_title . '</option>';
     }
@@ -193,16 +193,16 @@ function get_post_dropdown($select_id, $post_type, $selected = 0) {
  * @param $post_type The slug of the post type you wish to filter by as a strong.
  * @param $selected  The ID (as an integer) of the currently selected post.
  */
-function get_taxonomy_term_dropdown($select_id, $taxonomy, $selected = 0) {
+function get_taxonomy_term_dropdown($select_name, $taxonomy, $selected = 0) {
 
 	// Get raw array of all available terms corresponding to the $taxonomy.
 	$terms = get_terms( $taxonomy );
     // $posts = get_posts(array('post_type'=> $post_type, 'post_status' => 'publish', 'suppress_filters' => false, 'posts_per_page'=>-1));
 
     // Generate output string.
-    $output = '<select class="widefat" id="' . $select_id . '">';
+    $output = '<select class="widefat" name="' . $select_name . '">';
     foreach ($terms as $term) {
-    	$output .= '<option value="' . $term->name . '"' . ($selected == $term->name ? ' selected="selected"' : '') . '>' . $term->name . '</option>';
+    	$output .= '<option value="' . $term->slug . '"' . ($selected == $term->name ? ' selected="selected"' : '') . '>' . $term->name . '</option>';
     }
     $output .= '</select>';
 
