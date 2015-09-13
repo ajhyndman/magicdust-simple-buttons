@@ -24,11 +24,6 @@ function initialise_toggle() {
 
     // Toggle active control groups when a new link type is selected.
     jQuery('[data-select="link-type"]').on( "change", magicdustToggleFields );
-
-    // Toggle active control groups when the widget is saved.
-    // jQuery(document).ajaxComplete(function () {
-    //     magicdustToggleFields();
-    // }
 }
 
 
@@ -41,8 +36,6 @@ function magicdustToggleFields()
     // Hide all link control fields.
     // jQuery('[id^="magicdust_button_widget-"][id$="-control"]').hide();
     jQuery('[data-control-group][data-control-group!="link-type"]').hide();
-    console.log("\nHIDE THESE:")
-    console.log(jQuery('[data-control]'));
 
     // Show the control fields that correspond with each selected value for link
     // type.
@@ -55,8 +48,8 @@ function magicdustToggleFields()
 
         // Move to the end, and show control groups in this widget whose type matches the selected
         // value.
+        var active_group = widget.children().filter('[data-control-group]').filter('[data-control-group="' + selected_value + '"]').detach();
         var control_groups = widget.children().filter('[data-control-group]');
-        var active_group = control_groups.filter('[data-control-group="' + selected_value + '"]').detach();
         control_groups.last().after(active_group);
         active_group.show();
     });
