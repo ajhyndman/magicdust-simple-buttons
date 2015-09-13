@@ -31,7 +31,15 @@ add_action( 'widgets_init', function(){
 
 /* Include the bundled CSS. */
 
-function enqueue_button_scripts() {
+function button_frontend_scripts() {
 	wp_enqueue_style( 'magicdust_button_stylesheet', plugins_url( 'buttons.css', __FILE__ ), '', 0.1 );
 }
-add_action( 'wp_enqueue_scripts', 'magicdust\enqueue_button_scripts' );
+add_action( 'wp_enqueue_scripts', 'magicdust\button_frontend_scripts' );
+
+
+/* Include the admin conditional field handler. */
+
+function button_admin_scripts() {
+	wp_enqueue_script( 'magicdust_button_widget_script', plugins_url( 'conditional-fields.js', __FILE__ ), '', 0.1 );
+}
+add_action( 'admin_enqueue_scripts', 'magicdust\button_admin_scripts' );
