@@ -6,7 +6,7 @@
 /**
  * Plugin Name: Magicdust Simple Buttons
  * Plugin URI: https://github.com/ajhyndman/magicdust-simple-buttons
- * Description: A very basic button widget for WordPress. This widget is designed for the express purpose of making adding and removing simple, stylized links (links with a class) to sidebars more convenient for non-technical users.
+ * Description: A very basic button widget for WordPress. This widget is designed for the express purpose of making the act of adding and removing simple, stylized links (links with a class) to sidebars more convenient for non-technical users.
  * Author: Andrew Hyndman
  * Version: 1.0
  * Author URI: https://github.com/ajhyndman
