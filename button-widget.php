@@ -40,13 +40,13 @@ class Button_Widget extends \WP_Widget {
 
 		if ( $instance['link_type'] == 'custom-url' ) {
 			// If it is a custom URL:
-			echo('<a class="magic-button" href="' . esc_url( $instance['link'] ) . '">' . $instance['label'] . '</a>');
+			echo('<a class="magic-button" href="' . esc_url( $instance['link'] ) . '">' . $instance['button_text'] . '</a>');
 		} else if ( in_array( $instance['link_type'], get_post_types( array( 'show_in_nav_menus' => true ) ) ) ) {
 			// If it is a post type:
-			echo('<a class="magic-button" href="' . esc_url( get_permalink($instance['link']) ) . '">' . $instance['label'] . '</a>');
+			echo('<a class="magic-button" href="' . esc_url( get_permalink($instance['link']) ) . '">' . $instance['button_text'] . '</a>');
 		} else {
 			// If it is a taxonomy:
-			echo('<a class="magic-button" href="' . esc_url( get_term_link( $instance['link'], $instance['link_type'] ) ) . '">' . $instance['label'] . '</a>');
+			echo('<a class="magic-button" href="' . esc_url( get_term_link( $instance['link'], $instance['link_type'] ) ) . '">' . $instance['button_text'] . '</a>');
 		}
 
 		echo $args['after_widget'];
@@ -62,7 +62,7 @@ class Button_Widget extends \WP_Widget {
 		/* Initialize variables to store the user's settings for each widget instance. */
 
 		// The label of the link that will eventually be output.
-		$label = ! empty( $instance['label'] ) ? $instance['label'] : __( 'New Label', 'magicdust-button-label-placeholder' );
+		$label = ! empty( $instance['button_text'] ) ? $instance['button_text'] : __( 'New Label', 'magicdust-button-label-placeholder' );
 		
 		// The type of link target: can be a post type, taxonomy or text link.
 		$link_type = ! empty( $instance['link_type'] ) ? $instance['link_type'] : __( 'page', 'magicdust-button-link_type-placeholder' );
@@ -76,8 +76,8 @@ class Button_Widget extends \WP_Widget {
 
 		<!-- Simple text entry for the button text. -->
 		<p>
-			<label for="<?php echo $this->get_field_id( 'label' ); ?>"><?php _e( 'Label:' ); ?></label> 
-			<input class="widefat" id="<?php echo $this->get_field_id( 'label' ); ?>" name="<?php echo $this->get_field_name( 'label' ); ?>" type="text" value="<?php echo esc_attr( $label ); ?>">
+			<label for="<?php echo $this->get_field_id( 'button_text' ); ?>"><?php _e( 'Button Text:' ); ?></label> 
+			<input class="widefat" id="<?php echo $this->get_field_id( 'button_text' ); ?>" name="<?php echo $this->get_field_name( 'button_text' ); ?>" type="text" value="<?php echo esc_attr( $label ); ?>">
 		</p>
 
 
@@ -148,7 +148,7 @@ class Button_Widget extends \WP_Widget {
 	 */
 	public function update( $new_instance, $old_instance ) {
 		$instance = array();
-		$instance['label'] = ( ! empty( $new_instance['label'] ) ) ? strip_tags( $new_instance['label'] ) : 'Unlabeled';
+		$instance['button_text'] = ( ! empty( $new_instance['button_text'] ) ) ? strip_tags( $new_instance['button_text'] ) : 'Unlabeled';
 		$instance['link_type'] = ( ! empty( $new_instance['link_type'] ) ) ? strip_tags( $new_instance['link_type'] ) : 'page';
 		$instance['link'] = ( ! empty( $new_instance['link'] ) ) ? strip_tags( $new_instance['link'] ) : '#';
 
